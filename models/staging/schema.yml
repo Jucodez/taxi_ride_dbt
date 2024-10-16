@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: staging
+    database: dtc-de-429610
+     # For postgres:
+      #database: production
+    schema: taxi_trips
+
+      # loaded_at_field: record_loaded_at
+    tables:
+      - name: green_trips
+      - name: yellow_trips
