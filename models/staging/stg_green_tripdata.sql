@@ -10,7 +10,7 @@ source as (
 
     select *, row_number() over(partition by vendorid, lpep_pickup_datetime) as rn
     from {{ source('staging', 'green_trips') }}
-    where vendorid is not null
+    where vendorid is not null and FORMAT_DATETIME('%B', lpep_pickup_datetime) in ('June','July') and FORMAT_DATETIME('%B', lpep_dropoff_datetime) in ('June','July')
 
 )
 
@@ -44,7 +44,7 @@ select
     coalesce({{ dbt.safe_cast("payment_type", api.Column.translate_type("integer")) }},0) as payment_type,
     {{ get_payment_type_description("payment_type") }} as payment_type_description
 from source
-where rn = 1
+where rn = 1 
 
 
 {% if var('is_test_run', default=false) %}

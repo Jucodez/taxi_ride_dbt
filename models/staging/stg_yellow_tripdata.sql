@@ -5,7 +5,7 @@ with tripdata as
   select *,
     row_number() over(partition by vendorid, tpep_pickup_datetime) as rn
   from {{ source('staging','yellow_trips') }}
-  where vendorid is not null 
+  where vendorid is not null  and FORMAT_DATETIME('%B', tpep_pickup_datetime) in ('June','July') and FORMAT_DATETIME('%B', tpep_dropoff_datetime) in ('June','July')
 )
 select
    -- identifiers
