@@ -6,7 +6,7 @@ with trips_data as (
     select 
     -- Reveneue grouping 
     pickup_zone as revenue_zone,
-    {{ dbt.date_trunc("month", "pickup_datetime") }} as revenue_month, 
+    FORMAT_DATETIME('%B', pickup_datetime) as revenue_month,
 
     service_type, 
 
